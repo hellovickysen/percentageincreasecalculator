@@ -1,0 +1,146 @@
+<section class="calculator-workspace" id="calculator" aria-label="Percentage increase calculator">
+  <div class="mode-tabs" role="tablist" aria-label="Choose a calculation">
+    <button type="button" role="tab" aria-selected="true" aria-controls="panel-increase" id="tab-increase" data-mode="increase">Find % increase</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls="panel-apply" id="tab-apply" data-mode="apply">Add a %</button>
+    <button type="button" role="tab" aria-selected="false" aria-controls="panel-original" id="tab-original" data-mode="original">Find original</button>
+  </div>
+
+  <form data-calculator novalidate>
+    <div class="mode-panel" role="tabpanel" id="panel-increase" aria-labelledby="tab-increase" data-panel="increase">
+      <label>Original value<input name="increaseOriginal" inputmode="decimal" autocomplete="off" placeholder="0.00" /></label>
+      <label>New value<input name="increaseNew" inputmode="decimal" autocomplete="off" placeholder="0.00" /></label>
+    </div>
+    <div class="mode-panel" role="tabpanel" id="panel-apply" aria-labelledby="tab-apply" data-panel="apply" hidden>
+      <label>Starting value<input name="applyOriginal" inputmode="decimal" autocomplete="off" placeholder="0.00" /></label>
+      <label>Percentage increase<input name="applyPercentage" inputmode="decimal" autocomplete="off" placeholder="0.00" /><span class="input-suffix" aria-hidden="true">%</span></label>
+    </div>
+    <div class="mode-panel" role="tabpanel" id="panel-original" aria-labelledby="tab-original" data-panel="original" hidden>
+      <label>New value<input name="originalNew" inputmode="decimal" autocomplete="off" placeholder="0.00" /></label>
+      <label>Percentage increase<input name="originalPercentage" inputmode="decimal" autocomplete="off" placeholder="0.00" /><span class="input-suffix" aria-hidden="true">%</span></label>
+    </div>
+
+    <div class="calculator-actions">
+      <button class="calculate-button" type="submit">Calculate increase</button>
+      <button class="reset-button" type="reset">Reset</button>
+    </div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <div class="result-ledger" data-result aria-live="polite">
+      <p class="empty-result" data-empty>Your result will appear here.</p>
+      <div class="result-content" data-content hidden>
+        <p class="result-kicker" data-result-kicker></p>
+        <p class="result-number" data-result-number></p>
+        <p class="result-sentence" data-result-sentence></p>
+        <dl>
+          <div><dt>Difference</dt><dd data-difference></dd></div>
+          <div><dt>Multiplier</dt><dd data-multiplier></dd></div>
+          <div><dt>Working</dt><dd data-working></dd></div>
+        </dl>
+        <button class="copy-button" type="button" data-copy>Copy result</button>
+      </div>
+    </div>
+    <p class="local-note">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Calculated in your browser.
+    </p>
+  </form>
+</section>
+
+<script>
+  import { applyIncrease, calculateIncrease, findOriginal } from '../lib/percentage.mjs';
+
+  const bindCalculator = () => {
+    const shell = document.querySelector<HTMLElement>('[data-calculator]');
+    if (!shell || shell.dataset.bound) return;
+    shell.dataset.bound = 'true';
+
+    let mode = 'increase';
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode]'));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+    const error = shell.querySelector<HTMLElement>('[data-error]')!;
+    const empty = shell.querySelector<HTMLElement>('[data-empty]')!;
+    const content = shell.querySelector<HTMLElement>('[data-content]')!;
+    const submit = shell.querySelector<HTMLButtonElement>('.calculate-button')!;
+
+    const parse = (name: string) => {
+      const input = shell.querySelector<HTMLInputElement>(`[name="${name}"]`)!;
+      const normalized = input.value.trim().replaceAll(',', '').replace(/[$%]/g, '');
+      if (!normalized) throw new Error('Complete both fields before calculating.');
+      const value = Number(normalized);
+      if (!Number.isFinite(value)) throw new Error('Use numbers only, such as 1250 or 12.5.');
+      return value;
+    };
+
+    const format = (value: number, digits = 6) => new Intl.NumberFormat('en-US', {
+      maximumFractionDigits: digits,
+      minimumFractionDigits: 0,
+    }).format(value);
+
+    const clearResult = () => {
+      error.hidden = true;
+      content.hidden = true;
+      empty.hidden = false;
+    };
+
+    const render = (result: { original: number; next: number; difference: number; percentage: number; multiplier: number }) => {
+      const isDecrease = result.percentage < 0;
+      const direction = isDecrease ? 'decrease' : 'increase';
+      const percentage = Math.abs(result.percentage);
+      shell.querySelector<HTMLElement>('[data-result-kicker]')!.textContent = `Percentage ${direction}`;
+      shell.querySelector<HTMLElement>('[data-result-number]')!.textContent = `${format(percentage)}%`;
+      shell.querySelector<HTMLElement>('[data-result-sentence]')!.textContent = `${format(result.next)} is a ${format(percentage)}% ${direction} from ${format(result.original)}.`;
+      shell.querySelector<HTMLElement>('[data-difference]')!.textContent = format(Math.abs(result.difference));
+      shell.querySelector<HTMLElement>('[data-multiplier]')!.textContent = `${format(result.multiplier)}×`;
+      shell.querySelector<HTMLElement>('[data-working]')!.textContent = mode === 'original'
+        ? `${format(result.next)} ÷ ${format(result.multiplier)}`
+        : mode === 'apply'
+          ? `${format(result.original)} × ${format(result.multiplier)}`
+          : `(${format(result.next)} − ${format(result.original)}) ÷ ${format(result.original)} × 100`;
+      error.hidden = true;
+      empty.hidden = true;
+      content.hidden = false;
+    };
+
+    tabs.forEach((tab, index) => tab.addEventListener('click', () => {
+      mode = tab.dataset.mode!;
+      tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+      panels.forEach((panel) => { panel.hidden = panel.dataset.panel !== mode; });
+      submit.textContent = mode === 'apply' ? 'Calculate new value' : mode === 'original' ? 'Find original value' : 'Calculate increase';
+      clearResult();
+      panels.find((panel) => !panel.hidden)?.querySelector<HTMLInputElement>('input')?.focus();
+      tabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }));
+
+    shell.addEventListener('submit', (event) => {
+      event.preventDefault();
+      try {
+        const result = mode === 'apply'
+          ? applyIncrease(parse('applyOriginal'), parse('applyPercentage'))
+          : mode === 'original'
+            ? findOriginal(parse('originalNew'), parse('originalPercentage'))
+            : calculateIncrease(parse('increaseOriginal'), parse('increaseNew'));
+        render(result);
+      } catch (problem) {
+        error.textContent = problem instanceof Error ? problem.message : 'Check both values and try again.';
+        error.hidden = false;
+        content.hidden = true;
+        empty.hidden = false;
+      }
+    });
+
+    shell.addEventListener('reset', () => setTimeout(clearResult, 0));
+    shell.querySelector<HTMLButtonElement>('[data-copy]')!.addEventListener('click', async (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const sentence = shell.querySelector<HTMLElement>('[data-result-sentence]')!.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(sentence);
+        button.textContent = 'Copied';
+        setTimeout(() => { button.textContent = 'Copy result'; }, 1500);
+      } catch {
+        button.textContent = 'Select and copy the result above';
+      }
+    });
+  };
+
+  bindCalculator();
+  document.addEventListener('astro:page-load', bindCalculator);
+</script>

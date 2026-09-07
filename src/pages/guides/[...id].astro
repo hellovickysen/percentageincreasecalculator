@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({ params: { id: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const { Content, headings } = await render(guide);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: guide.data.title,
+    description: guide.data.description,
+    image: 'https://percentageincreasecalculator.xyz/og-default.png',
+    inLanguage: 'en-US',
+    author: { '@type': 'Person', name: 'Nikita Mondal', url: 'https://percentageincreasecalculator.xyz/author/nikita-mondal/' },
+    publisher: { '@type': 'Person', name: 'Nikita Mondal' },
+    mainEntityOfPage: canonical,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Calculator', item: 'https://percentageincreasecalculator.xyz/' },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://percentageincreasecalculator.xyz/guides/' },
+      { '@type': 'ListItem', position: 3, name: guide.data.title, item: canonical },
+    ],
+  },
+];
+---
+<BaseLayout title={`${guide.data.title} | Percentage Increase Calculator`} description={guide.data.description} active="guides" structuredData={structuredData}>
+  <nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Calculator</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">{guide.data.title}</li></ol></nav>
+  <header class="page-head wrap">
+    <h1>{guide.data.title}</h1>
+    <p>{guide.data.summary}</p>
+    <div class="author-line"><span>Written by <a href="/author/nikita-mondal/">Nikita Mondal</a></span><span>Reviewed with worked calculations</span></div>
+  </header>
+  <section class="content-page">
+    <div class="content-grid wrap">
+      <article class="prose"><Content /></article>
+      <aside class="side-index" aria-label="On this page">
+        <strong>In this guide</strong>
+        {headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}
+        <a href="/#calculator">Use the calculator</a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

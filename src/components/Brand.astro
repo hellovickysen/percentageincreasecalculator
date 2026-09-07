@@ -1,0 +1,8 @@
+---
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<a class:list={['brand', { compact }]} href="/" aria-label="Percentage Increase Calculator home">
+  <span class="brand-mark" aria-hidden="true">Δ%</span>
+  <span class="brand-name">Percentage Increase Calculator</span>
+</a>

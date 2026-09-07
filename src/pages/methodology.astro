@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Calculation Methodology" description="See the formulas, input rules, rounding approach, and verification process used by Percentage Increase Calculator.">
+  <header class="page-head wrap"><h1>Calculation methodology</h1><p>The formulas, boundaries, and display rules behind every result.</p></header>
+  <section class="content-page"><div class="content-grid wrap"><article class="prose">
+    <h2>Find the percentage increase</h2>
+    <pre><code>((New value − Original value) ÷ Original value) × 100</code></pre>
+    <p>The original value must be greater than zero. A new value below the original produces a negative result, which the interface describes as a percentage decrease.</p>
+    <h2>Apply an increase</h2>
+    <pre><code>New value = Original value × (1 + Percentage ÷ 100)</code></pre>
+    <p>This mode accepts an increase of zero or more. It also shows the increase amount and growth multiplier.</p>
+    <h2>Find the original value</h2>
+    <pre><code>Original value = New value ÷ (1 + Percentage ÷ 100)</code></pre>
+    <p>Division reverses the increase. Subtracting the percentage from the final value would use the wrong baseline.</p>
+    <h2>Precision and display</h2>
+    <p>Calculations use JavaScript numbers without rounding intermediate steps. The interface displays up to six decimal places and adds US thousands separators. Display rounding can therefore hide a very small remainder without changing the underlying calculation.</p>
+    <h2>Zero and negative values</h2>
+    <p>A percentage increase from zero is undefined because the formula requires division by zero. This general-purpose tool requires a positive original value to avoid ambiguous results involving negative baselines.</p>
+    <h2>Verification</h2>
+    <p>Automated tests cover normal increases, decreases, unchanged values, decimals, large numbers, reverse calculations, zero baselines, and invalid inputs. Worked examples are also checked by substituting the result back into the original equation.</p>
+  </article><aside class="side-index"><strong>Related</strong><a href="/guides/percentage-increase-from-zero/">Increase from zero</a><a href="/guides/reverse-percentage-find-original/">Reverse percentages</a><a href="/#calculator">Calculator</a></aside></div></section>
+</BaseLayout>

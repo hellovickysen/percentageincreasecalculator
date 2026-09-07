@@ -1,0 +1,231 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Calculator from '../components/Calculator.astro';
+
+const allGuides = await getCollection('guides');
+const featuredSlugs = [
+  'salary-increase-percentage',
+  'price-increase-percentage',
+  'reverse-percentage-find-original',
+  'percentage-increase-excel',
+  'percentage-points-vs-percent',
+];
+const guideMap = new Map(allGuides.map((guide) => [guide.id, guide]));
+const featured = featuredSlugs.map((id) => guideMap.get(id)).filter((guide) => guide !== undefined);
+
+const faqItems = [
+  { question: 'What is a percentage increase?', answer: 'A percentage increase shows how much a value grew compared with its original value. The original value is the baseline.' },
+  { question: 'How is percentage increase calculated?', answer: 'Subtract the original value from the new value. Divide the difference by the original value, then multiply by 100.' },
+  { question: 'What is the difference between percent and percentage points?', answer: 'Percent describes relative change. Percentage points describe the direct difference between two percentages.' },
+  { question: 'What happens when the new value is lower?', answer: 'The calculator reports a percentage decrease and shows the size of the decrease.' },
+  { question: 'Can I use decimals and large numbers?', answer: 'Yes. You can enter decimals, commas, dollar signs, and large values. Results are rounded only for display.' },
+  { question: 'Can I calculate a percentage increase from zero?', answer: 'No. A percentage increase needs a nonzero original value because the formula divides by the original value. From zero, report the absolute change instead.' },
+  { question: 'How do I find the original value before an increase?', answer: 'Divide the final value by one plus the percentage rate written as a decimal. You can also choose “Find original” in the calculator.' },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Percentage Increase Calculator',
+    url: 'https://percentageincreasecalculator.xyz/',
+    inLanguage: 'en-US',
+    author: { '@type': 'Person', name: 'Nikita Mondal', url: 'https://percentageincreasecalculator.xyz/author/nikita-mondal/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Percentage Increase Calculator',
+    url: 'https://percentageincreasecalculator.xyz/',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    description: 'Find a percentage increase, calculate a new value after an increase, or work backward to the original value.',
+    author: { '@type': 'Person', name: 'Nikita Mondal' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Percentage Increase Calculator – Find the Increase"
+  description="Use the Percentage Increase Calculator to compare two values, add a percentage increase, or find the original value with clear steps."
+  active="calculator"
+  structuredData={structuredData}
+>
+  <section class="hero-tool wrap">
+    <div class="hero-copy">
+      <h1>Percentage Increase Calculator</h1>
+      <p>Use this free Percentage Increase Calculator to compare two values, apply an increase, or work backward to the original number. See the difference, percentage, multiplier, and calculation steps.</p>
+    </div>
+    <Calculator />
+  </section>
+
+  <section class="numbered-section" id="how-it-works">
+    <div class="chapter wrap">
+      <span class="chapter-number">01</span>
+      <div class="chapter-body">
+        <h2>The percentage increase formula</h2>
+        <div class="formula-line">((New − Original) ÷ Original) × 100</div>
+        <p>Subtract the original value from the new value. Divide that difference by the original value, then multiply by 100.</p>
+        <p>The original value is the baseline. The new value is the amount after the change. Dividing by the original makes the answer relative to where the value started, so increases of different sizes can be compared fairly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section tool-modes-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">02</span>
+      <div class="chapter-body">
+        <h2>How to use the Percentage Increase Calculator</h2>
+        <p>Choose the tab that matches the information you already know. Enter your numbers without a percent sign, then select the calculation button. Commas and dollar signs are accepted where they help you read the value.</p>
+        <div class="mode-explanations">
+          <article><span>Mode A</span><h3>Find % increase</h3><p>Enter the original and new values. Use this for a price, salary, count, measurement, or any other before-and-after comparison.</p></article>
+          <article><span>Mode B</span><h3>Add a percentage</h3><p>Enter a starting value and an increase rate. The result shows the increase amount and the new total.</p></article>
+          <article><span>Mode C</span><h3>Find the original</h3><p>Enter the final value and known increase rate. This reverses the change to recover the starting value.</p></article>
+        </div>
+        <p>All three modes use the same relationship between the original value, new value, and rate. The calculator simply rearranges the formula for the missing number.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section worked-example">
+    <div class="chapter wrap">
+      <span class="chapter-number">03</span>
+      <div class="chapter-body">
+        <h2>Example: increase from $80 to $100</h2>
+        <p>The amount increased by $20. That $20 is one quarter of the original $80, so the percentage increase is 25%.</p>
+        <div class="example-ledger" aria-label="Worked percentage increase example">
+          <div><span>Difference</span><strong>$20</strong><small>$100 − $80 = $20</small></div>
+          <div><span>Multiplier</span><strong>1.25×</strong><small>$100 ÷ $80 = 1.25</small></div>
+          <div><span>Increase</span><strong>25%</strong><small>0.25 × 100 = 25%</small></div>
+        </div>
+        <p>The new value is 125% of the original value. That does not mean the increase itself is 125%. The increase is only the extra part: 25%.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">04</span>
+      <div class="chapter-body">
+        <h2>Understand every part of the result</h2>
+        <p>A percentage is easier to trust when you can see the numbers behind it. The result panel separates three related answers.</p>
+        <dl class="result-key">
+          <div><dt>Difference</dt><dd>The new value minus the original value. This is the absolute amount gained.</dd></div>
+          <div><dt>Percentage increase</dt><dd>The difference measured as a share of the original value.</dd></div>
+          <div><dt>Multiplier</dt><dd>The new value divided by the original. A multiplier of 1.25× means the new value is 125% of the starting value.</dd></div>
+        </dl>
+        <p>If the result is negative, the value went down. The calculator labels that result as a percentage decrease so the direction is clear.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section baseline-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">05</span>
+      <div class="chapter-body">
+        <h2>Use the original value as the baseline</h2>
+        <p>Always divide the increase by the original value. Dividing by the new value answers a different question and produces the wrong rate.</p>
+        <div class="baseline" aria-label="A value increasing from 80 to 100">
+          <div class="baseline-labels"><span>Original<br /><strong>$80</strong></span><span>New<br /><strong>$100</strong></span></div>
+          <div class="baseline-line"></div>
+          <p class="baseline-note">Increase: $20 (25%)</p>
+        </div>
+        <div class="edge-case-notes">
+          <p><strong>Original value is zero:</strong> a percentage increase is undefined because the formula would divide by zero. Read the <a href="/guides/percentage-increase-from-zero/">increase-from-zero explanation</a>.</p>
+          <p><strong>Values are equal:</strong> the difference and percentage increase are both zero.</p>
+          <p><strong>New value is smaller:</strong> the same calculation produces a decrease. The direction changes, but the original value is still the baseline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section worked-example">
+    <div class="chapter wrap">
+      <span class="chapter-number">06</span>
+      <div class="chapter-body">
+        <h2>Everyday percentage increase examples</h2>
+        <p>The formula works with dollars, people, measurements, sales, website visits, or any count that has a meaningful positive starting value.</p>
+        <div class="comparison-table" role="region" aria-label="Percentage increase examples" tabindex="0">
+          <table>
+            <thead><tr><th>Situation</th><th>Original</th><th>New</th><th>Increase</th></tr></thead>
+            <tbody>
+              <tr><td>Product price</td><td>$50</td><td>$62.50</td><td>25%</td></tr>
+              <tr><td>Annual salary</td><td>$60,000</td><td>$63,000</td><td>5%</td></tr>
+              <tr><td>Monthly customers</td><td>240</td><td>300</td><td>25%</td></tr>
+              <tr><td>Weekly distance</td><td>18 miles</td><td>22.5 miles</td><td>25%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>For a closer look at money examples, use the <a href="/guides/price-increase-percentage/">price increase guide</a> or the <a href="/guides/salary-increase-percentage/">salary increase guide</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">07</span>
+      <div class="chapter-body">
+        <h2>Common percentage increase mistakes</h2>
+        <ol class="mistake-list">
+          <li><strong>Using the new value as the divisor.</strong> The percentage must be measured from the original baseline.</li>
+          <li><strong>Reporting the multiplier as the increase.</strong> A result of 1.30× means the new value is 130% of the original, but the increase is 30%.</li>
+          <li><strong>Confusing percent with percentage points.</strong> A rate moving from 10% to 12% rises by 2 percentage points but increases by 20%. See <a href="/guides/percentage-points-vs-percent/">percentage points versus percent</a>.</li>
+          <li><strong>Adding repeated rates.</strong> Successive increases use a changing baseline, so they compound. Read how <a href="/guides/compound-percentage-increases/">compound percentage increases</a> work.</li>
+          <li><strong>Reversing an increase by subtraction.</strong> To recover an original value, divide by the multiplier. Follow the <a href="/guides/reverse-percentage-find-original/">reverse percentage formula</a>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section guides-band" id="guides">
+    <div class="chapter wrap">
+      <span class="chapter-number">08</span>
+      <div class="chapter-body">
+        <h2>Practical percentage guides</h2>
+        <p>Use these focused guides when your question needs more detail than one calculation. Each guide includes a formula, example, and link back to the calculator.</p>
+        <div class="guide-directory">
+          {featured.map((guide) => (
+            <a href={`/guides/${guide.id}/`}><span>{guide.data.title}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg></a>
+          ))}
+          <a href="/guides/"><span>Browse every guide</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">09</span>
+      <div class="chapter-body">
+        <h2>Calculation privacy and limits</h2>
+        <p>The calculator runs in your browser. Your entered values are not submitted to a server or saved in a database. Only your light or dark theme preference is stored locally.</p>
+        <p>Results are general arithmetic, not financial, tax, employment, investment, or legal advice. When a contract, report, or official rule defines its own percentage method, follow that definition.</p>
+        <p>See the <a href="/methodology/">calculation methodology</a> for formulas, rounding, boundaries, and test coverage. The site’s guides are written by <a href="/author/nikita-mondal/">Nikita Mondal</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbered-section">
+    <div class="chapter wrap">
+      <span class="chapter-number">10</span>
+      <div class="chapter-body">
+        <h2>Percentage increase questions</h2>
+        <div class="faq-rows">
+          {faqItems.map((item) => <details><summary>{item.question}</summary><p>{item.answer}</p></details>)}
+        </div>
+        <p class="pillar-close">Use the Percentage Increase Calculator whenever you need to compare a positive starting value with a later value, apply a known increase, or recover the original amount.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

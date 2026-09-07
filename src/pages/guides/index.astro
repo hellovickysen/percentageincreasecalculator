@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Percentage Increase Guides" description="Clear guides for percentage increases, reverse percentages, salary raises, price changes, spreadsheets, and common percentage mistakes." active="guides">
+  <header class="page-head wrap">
+    <h1>Practical percentage guides</h1>
+    <p>Choose the question that matches your numbers. Each guide includes a formula, a worked example, and a direct path back to the calculator.</p>
+  </header>
+  <section class="article-directory wrap" aria-label="All percentage guides">
+    {guides.map((guide, index) => (
+      <a class="article-row" href={`/guides/${guide.id}/`}>
+        <span class="index">{String(index + 1).padStart(2, '0')}</span>
+        <div><h2>{guide.data.title}</h2><p>{guide.data.summary}</p></div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg>
+      </a>
+    ))}
+  </section>
+</BaseLayout>

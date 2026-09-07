@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f0e8"/>
+  <path d="M0 0h1200v630H0z" fill="none" stroke="#191a17" stroke-width="8"/>
+  <text x="72" y="110" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#191a17">Δ% Percentage Increase Calculator</text>
+  <text x="72" y="275" font-family="Georgia, serif" font-size="90" fill="#191a17">Find the increase.</text>
+  <text x="72" y="370" font-family="Georgia, serif" font-size="90" fill="#191a17">See every step.</text>
+  <rect x="72" y="454" width="500" height="88" fill="#2446e8"/>
+  <text x="105" y="513" font-family="Arial, sans-serif" font-size="35" font-weight="700" fill="#fff">percentageincreasecalculator.xyz</text>
+  <rect x="1050" y="0" width="150" height="630" fill="#c7f64c"/>
+</svg>
