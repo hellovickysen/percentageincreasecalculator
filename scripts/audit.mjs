@@ -69,8 +69,12 @@ for (const name of guideFiles) {
   for (const id of related) if (!guideIds.has(id)) throw new Error(`Guide has unknown related link: ${name} -> ${id}`);
 }
 
-for (const asset of ['favicon.ico', 'favicon.svg', 'favicon-96x96.png', 'apple-touch-icon.png', 'og-default.png', 'robots.txt', 'sitemap-index.xml']) {
+for (const asset of ['favicon.ico', 'favicon.svg', 'favicon-96x96.png', 'apple-touch-icon.png', 'og-default.png', 'robots.txt', 'sitemap-index.xml', 'llms.txt']) {
   await access(join(root, asset));
 }
+
+const llms = await readFile(join(root, 'llms.txt'), 'utf8');
+if (!llms.startsWith('# Percentage Increase Calculator')) throw new Error('llms.txt must begin with the site H1');
+if (!llms.includes('https://percentageincreasecalculator.xyz/')) throw new Error('llms.txt must use production URLs');
 
 console.log(`Audit passed: ${files.length} HTML pages, ${titles.size} unique titles/descriptions/H1s, ${structuredDataBlocks} valid JSON-LD blocks, ${guideFiles.length} internally linked guides, 0 broken internal links.`);

@@ -1,0 +1,31 @@
+# Percentage Increase Calculator
+
+> A free browser-based calculator for finding a percentage increase, applying an increase, or recovering the original value. Written for a general US audience by Nikita Mondal.
+
+The calculator processes entered values in the browser. Results include the percentage change, absolute difference, multiplier, and calculation steps.
+
+## Calculator and methodology
+
+- [Percentage Increase Calculator](https://percentageincreasecalculator.xyz/): Compare an original and new value, add a percentage, or find the original value.
+- [Calculation methodology](https://percentageincreasecalculator.xyz/methodology/): Formulas, input rules, rounding, boundaries, and verification details.
+
+## Percentage guides
+
+- [All percentage guides](https://percentageincreasecalculator.xyz/guides/): Directory of every supporting guide.
+- [Salary increase percentage](https://percentageincreasecalculator.xyz/guides/salary-increase-percentage/): Calculate a raise from old and new salary values.
+- [Price increase percentage](https://percentageincreasecalculator.xyz/guides/price-increase-percentage/): Measure how much a price increased.
+- [Reverse percentage](https://percentageincreasecalculator.xyz/guides/reverse-percentage-find-original/): Recover the original value before an increase.
+- [Percentage increase in Excel](https://percentageincreasecalculator.xyz/guides/percentage-increase-excel/): Spreadsheet formulas and error handling.
+- [Percentage increase in Google Sheets](https://percentageincreasecalculator.xyz/guides/percentage-increase-google-sheets/): Sheet formulas and formatting.
+- [Percentage points versus percent](https://percentageincreasecalculator.xyz/guides/percentage-points-vs-percent/): Understand absolute and relative changes.
+- [Percentage increase versus percentage change](https://percentageincreasecalculator.xyz/guides/percentage-increase-vs-percentage-change/): Choose the correct comparison.
+- [Why increases and decreases do not cancel](https://percentageincreasecalculator.xyz/guides/percentage-increase-decrease-do-not-cancel/): Understand changing baselines.
+- [Percentage increase from zero](https://percentageincreasecalculator.xyz/guides/percentage-increase-from-zero/): Why division by a zero baseline is undefined.
+- [Compound percentage increases](https://percentageincreasecalculator.xyz/guides/compound-percentage-increases/): Calculate repeated increases.
+
+## Site information
+
+- [About](https://percentageincreasecalculator.xyz/about/): Site purpose and audience.
+- [Nikita Mondal](https://percentageincreasecalculator.xyz/author/nikita-mondal/): Author information.
+- [Privacy](https://percentageincreasecalculator.xyz/privacy/): Calculator data handling and theme preference storage.
+- [Contact](https://percentageincreasecalculator.xyz/contact/): Corrections and accessibility feedback.
