@@ -41,6 +41,6 @@ Do not choose a substitute baseline only to create an impressive percentage. The
 
 A very small positive baseline can produce an extremely large percentage. A move from 0.01 to 1 is a 9,900% increase. That is mathematically valid, but the absolute change of 0.99 may provide essential context.
 
-<a class="tool-link" href="/#calculator">Compare two values with a positive baseline</a>
+<a class="tool-link" href="/#calculator">Use the Percentage Increase Calculator with a positive baseline</a>
 
 For spreadsheet handling, see the [Excel guide](/guides/percentage-increase-excel/) or [Google Sheets guide](/guides/percentage-increase-google-sheets/).

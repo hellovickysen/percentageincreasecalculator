@@ -182,13 +182,16 @@ p { margin: 0 0 1rem; }
 .breadcrumbs li:not(:last-child)::after { content: '/'; margin-left: 8px; color: var(--line-soft); }
 .content-page { border-top: 1px solid var(--line); padding-top: 54px; padding-bottom: 86px; }
 .content-grid { display: grid; grid-template-columns: minmax(0, 810px) 260px; justify-content: space-between; gap: 70px; }
-.prose { font-size: 1.08rem; }
+.prose { min-width: 0; font-size: 1.08rem; }
 .prose h2 { margin: 2.5rem 0 1rem; font-size: clamp(2.1rem, 4vw, 3.4rem); }
 .prose h3 { margin: 2rem 0 .75rem; font-size: 1.65rem; }
 .prose p, .prose li { color: var(--prose-ink); }
 .prose li + li { margin-top: .5rem; }
 .prose pre { overflow-x: auto; padding: 18px 20px; border: 1px solid var(--line); background: var(--lime); font-size: 1rem; }
 .prose code { font-family: ui-monospace, monospace; }
+.prose table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
+.prose th, .prose td { min-width: 150px; padding: 12px 14px; border: 1px solid var(--line-soft); text-align: left; vertical-align: top; }
+.prose th { background: var(--paper-light); color: var(--ink); }
 .prose blockquote { margin: 28px 0; padding: 18px 22px; border-left: 5px solid var(--cobalt); background: var(--paper-light); }
 .prose blockquote p { margin: 0; }
 .tool-link { display: block; margin: 30px 0; padding: 17px 20px; border: 1px solid var(--line); background: var(--cobalt); color: white; text-decoration: none; font-weight: 700; box-shadow: var(--shadow-offset); }

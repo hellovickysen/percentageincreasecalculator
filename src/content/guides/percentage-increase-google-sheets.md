@@ -51,6 +51,6 @@ If `A2` contains the starting value and `B2` contains a percentage such as 7.5%,
 
 A value of 800 becomes 860 after a 7.5% increase.
 
-<a class="tool-link" href="/#calculator">Verify a row with the percentage calculator</a>
+<a class="tool-link" href="/#calculator">Verify a row with the Percentage Increase Calculator</a>
 
 For desktop spreadsheet steps, visit the [Excel percentage increase guide](/guides/percentage-increase-excel/). If your first value is zero, read [why no percentage increase exists from zero](/guides/percentage-increase-from-zero/).
