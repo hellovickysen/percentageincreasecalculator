@@ -11,7 +11,7 @@ async function walk(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) await walk(path);
-    else if (entry.name.endsWith('.html')) files.push(path);
+    else if (entry.name.endsWith('.html') && !/^google[a-z0-9]+\.html$/i.test(entry.name)) files.push(path);
   }
 }
 
