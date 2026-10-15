@@ -1,12 +1,15 @@
 ---
-title: Percentage Increase vs Percentage Change
-description: Compare percentage increase, percentage change, and percentage difference with formulas, examples, and the correct baseline for each.
+title: "Percentage Increase vs Percentage Change: Are They the Same?"
+seoTitle: "Percentage Increase vs Percentage Change: Are They the Same?"
+description: Percentage increase is a positive percentage change. Learn when the formulas are the same, when they differ, and when to use percentage difference instead.
 summary: Learn when an increase and a change use the same formula, and when percentage difference answers a separate question.
 order: 7
 featured: false
 ---
 
 Percentage change is the broad term for movement from an original value to a new value. Percentage increase is the positive version of that calculation.
+
+> **Quick answer:** Percentage increase and percentage change use the same formula when the new value is higher than the original value. Percentage change can also describe a decrease, while percentage increase only describes an upward move.
 
 | Measure | Use it when | Baseline |
 | --- | --- | --- |

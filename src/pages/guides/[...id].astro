@@ -33,7 +33,7 @@ const structuredData = [
   },
 ];
 ---
-<BaseLayout title={`${guide.data.title} | Percentage Increase Calculator`} description={guide.data.description} active="guides" structuredData={structuredData}>
+<BaseLayout title={guide.data.seoTitle ?? `${guide.data.title} | Percentage Increase Calculator`} description={guide.data.description} active="guides" structuredData={structuredData}>
   <nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Calculator</a></li><li><a href="/guides/">Guides</a></li><li aria-current="page">{guide.data.title}</li></ol></nav>
   <header class="page-head wrap">
     <h1>{guide.data.title}</h1>

@@ -6,6 +6,7 @@ const guides = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
   schema: z.object({
     title: z.string(),
+    seoTitle: z.string().optional(),
     description: z.string(),
     summary: z.string(),
     order: z.number(),
